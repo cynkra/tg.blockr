@@ -9,8 +9,9 @@ Authors@R:
 Description: Extends 'blockr.core' with interactive blocks for working with
     Canton Thurgau datasets. Provides a visual interface to load and explore
     datasets from the 'tg.data' package without writing code. The TG Data block
-    allows users to select from all available Thurgau datasets, configure label
-    addition, and run validation through a graphical interface.
+    allows users to select from all available Thurgau datasets, choose between
+    loading from the data lake (faster) or directly from the internet, configure
+    label addition, and run validation through a graphical interface.
 License: MIT + file LICENSE
 URL: https://github.com/cynkra/tg.blockr
 BugReports: https://github.com/cynkra/tg.blockr/issues
@@ -21,7 +22,8 @@ Imports:
     shiny,
     blockr.core,
     cli,
-    tg.data
+    tg.data,
+    tg.plot
 Suggests:
     blockr.md,
     blockr.dplyr,
@@ -29,5 +31,6 @@ Suggests:
     testthat (>= 3.0.0)
 Remotes:
     cynkra/blockr.core,
-    cynkra/tg.data
+    cynkra/tg.data,
+    cynkra/tg.plot
 Config/testthat/edition: 3

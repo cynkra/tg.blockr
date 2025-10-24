@@ -29,7 +29,20 @@ pak::pak("cynkra/blockr.ggplot")
 
 ## Getting Started
 
-Create and launch a workflow to explore TG datasets:
+The easiest way to start exploring TG datasets is with the `blockr()` function:
+
+```r
+library(tg.blockr)
+
+# Launch interactive dashboard with TG data block
+blockr()
+```
+
+This opens a visual interface in your web browser with a TG data block ready to use. You can then add transformation and visualization blocks through the UI.
+
+> **Note**: The `blockr()` function was previously available in the tg.data package but has been moved to tg.blockr. If you previously used `tg.data::blockr()`, please use `tg.blockr::blockr()` instead.
+
+Alternatively, create a custom workflow programmatically:
 
 ```r
 library(blockr.core)
@@ -37,7 +50,7 @@ library(blockr.md)
 library(blockr.dplyr)
 library(tg.blockr)
 
-# Create a simple workflow
+# Create a workflow with a pre-selected dataset
 serve(
   new_md_board(
     blocks = new_tgdata_block("energie_emiss_co2")
@@ -47,8 +60,9 @@ serve(
 
 This opens a visual interface in your web browser where you can:
 - Select from all available Thurgau datasets via dropdown
-- Choose whether to add human-readable labels
-- Enable/disable data validation
+- Choose between data lake (faster) or direct internet fetch
+- Add human-readable labels (when using direct fetch)
+- Enable/disable data validation (when using direct fetch)
 - Connect additional transformation and visualization blocks
 
 ## Available Datasets
@@ -82,18 +96,44 @@ source(system.file("samples/tg-data-demo.R", package = "tg.blockr"))
 ### Features
 
 - **Dataset selection**: Dropdown list of all available tg.data datasets
+- **Data lake support**: Load from pre-processed parquet files (faster, default)
+- **Direct fetch**: Alternative loading from original internet sources
 - **Label addition**: Optionally add human-readable municipality and category names
 - **Validation**: Built-in data validation to ensure integrity
 - **Auto-registration**: Block automatically appears in the blockr UI
 
+### Data Loading Methods
+
+The TG Data block supports two methods for loading data:
+
+1. **Data Lake** (default, recommended)
+   - Uses `tg.plot::get_data()` to load pre-processed parquet files
+   - Significantly faster than direct fetch
+   - Requires `GITEA_TOK` environment variable to be set
+   - Data is pre-validated and processed
+
+2. **Direct Fetch** (uncheck "Use data lake")
+   - Uses `tg.data::get_dataset()` to fetch from original sources
+   - Loads from TG OGD API, Monithur, Statistik TG, etc.
+   - Allows custom label addition and validation options
+   - Useful for comparing data sources or getting latest updates
+   - **Note**: Requires tg.data >= 0.0.0.9028 (namespace fix for external calls)
+
 ### Usage in Code
 
 ```r
-# Create a TG Data block programmatically
+# Create a TG Data block with data lake (default, faster)
 block <- new_tgdata_block(
-  dataset = "energie_emiss_co2",  # Pre-select a dataset
-  add_labels = TRUE,               # Add readable labels
-  validate = TRUE                  # Run validation
+  dataset = "energie_emiss_co2",
+  use_data_lake = TRUE  # Default
+)
+
+# Create a block using direct fetch
+block <- new_tgdata_block(
+  dataset = "energie_emiss_co2",
+  use_data_lake = FALSE,
+  add_labels = TRUE,
+  validate = TRUE
 )
 
 # Use in a board with transformations
@@ -101,13 +141,25 @@ serve(
   new_md_board(
     blocks = c(
       data = new_tgdata_block("abfall_menge_art"),
-      filtered = new_expression_filter_block(
-        expressions = list("jahr >= 2020")
+      filtered = new_filter_expr_block(
+        exprs = "jahr >= 2020"
       )
     ),
     links = new_link("data", "filtered", "data")
   )
 )
+```
+
+### Setting up Data Lake Access
+
+To use the data lake (recommended for better performance):
+
+```r
+# Set your Gitea token as an environment variable
+Sys.setenv(GITEA_TOK = "your_token_here")
+
+# Or add to your .Renviron file:
+# GITEA_TOK=your_token_here
 ```
 
 ## Learn More

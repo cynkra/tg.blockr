@@ -14,16 +14,15 @@ library(tg.blockr)
 blockr.core::serve(
   blockr.md::new_md_board(
     blocks = c(
-      # Load TG dataset - users can select from dropdown in the UI
+      # Load TG dataset - uses data lake by default (faster)
       data = new_tgdata_block(
         dataset = "energie_emiss_co2",
-        add_labels = TRUE,
-        validate = TRUE
+        use_data_lake = TRUE  # Default: load from data lake (faster)
       ),
 
       # Filter to recent years
-      recent = new_expression_filter_block(
-        expressions = list("jahr >= 2010")
+      recent = new_filter_expr_block(
+        exprs = "jahr >= 2010"
       ),
 
       # Select key columns
@@ -69,8 +68,8 @@ blockr.core::serve(
       "The workflow:\n\n",
       "1. **Loads** CO2 emissions data from Canton Thurgau\n",
       "   - Uses the TG Data block to access `energie_emiss_co2` dataset\n",
-      "   - Automatically adds human-readable labels for municipalities\n",
-      "   - Validates data integrity\n",
+      "   - Loads from data lake (faster) using `tg.plot::get_data()`\n",
+      "   - Toggle 'Use data lake' to compare with direct internet fetch\n",
       "2. **Filters** to recent years (2010 onwards)\n",
       "3. **Selects** key columns: year, municipality, CO2 emissions\n",
       "4. **Summarizes** emissions by municipality\n",
@@ -89,11 +88,23 @@ blockr.core::serve(
       "- Agricultural land use\n",
       "- And more...\n\n",
 
+      "### Data Lake vs Direct Fetch\n\n",
+      "The TG Data block supports two data loading methods:\n\n",
+      "- **Data Lake** (default): Loads pre-processed parquet files via `tg.plot::get_data()`\n",
+      "  - Significantly faster\n",
+      "  - Requires GITEA_TOK environment variable\n",
+      "  - Pre-processed and validated\n",
+      "- **Direct Fetch**: Loads from original sources via `tg.data::get_dataset()`\n",
+      "  - Fetches from TG OGD API, Monithur, etc.\n",
+      "  - Allows custom label addition and validation\n",
+      "  - Useful for comparing data sources\n\n",
+
       "### Try It Yourself\n\n",
       "1. Click on the **data** block to select a different dataset\n",
-      "2. Modify the filter conditions in the **recent** block\n",
-      "3. Add more transformation blocks using the '+' button\n",
-      "4. Connect blocks by dragging between them\n\n",
+      "2. Toggle **Use data lake** to compare loading methods\n",
+      "3. Modify the filter conditions in the **recent** block\n",
+      "4. Add more transformation blocks using the '+' button\n",
+      "5. Connect blocks by dragging between them\n\n",
 
       "## Top 10 Municipalities by CO2 Emissions\n\n",
       "![](blockr://top_municipalities)\n\n"
