@@ -164,6 +164,7 @@ Sys.setenv(GITEA_TOK = "your_token_here")
 
 ## Learn More
 
+- [blockr](https://bristolmyerssquibb.github.io/blockr/) - Official blockr framework documentation
 - [tg.data package](https://github.com/cynkra/tg.data) - Dataset documentation
 - [blockr.core](https://bristolmyerssquibb.github.io/blockr.core/) - Core workflow engine
 - [blockr.dplyr](https://bristolmyerssquibb.github.io/blockr.dplyr/) - Data transformation blocks
