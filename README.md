@@ -21,10 +21,10 @@ pak::pak("cynkra/tg.blockr")
 pak::pak("cynkra/tg.data")
 
 # Install blockr dependencies
-pak::pak("cynkra/blockr.core")
+pak::pak("BristolMyersSquibb/blockr.core")
 pak::pak("BristolMyersSquibb/blockr.md")
-pak::pak("cynkra/blockr.dplyr")
-pak::pak("cynkra/blockr.ggplot")
+pak::pak("BristolMyersSquibb/blockr.dplyr")
+pak::pak("BristolMyersSquibb/blockr.ggplot")
 ```
 
 ## Getting Started

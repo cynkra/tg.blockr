@@ -30,7 +30,7 @@ Suggests:
     blockr.ggplot,
     testthat (>= 3.0.0)
 Remotes:
-    cynkra/blockr.core,
+    BristolMyersSquibb/blockr.core,
     cynkra/tg.data,
     cynkra/tg.plot
 Config/testthat/edition: 3
