@@ -182,7 +182,7 @@ blockr <- function(...) {
   if (!requireNamespace("blockr.md", quietly = TRUE)) {
     stop(
       "Package 'blockr.md' is required but not installed. ",
-      "Install it with: pak::pak('cynkra/blockr.md')",
+      "Install it with: pak::pak('BristolMyersSquibb/blockr.md')",
       call. = FALSE
     )
   }
@@ -190,14 +190,14 @@ blockr <- function(...) {
   if (!requireNamespace("blockr.dplyr", quietly = TRUE)) {
     cli::cli_warn(
       "Package 'blockr.dplyr' is not installed. ",
-      "Install it with: pak::pak('cynkra/blockr.dplyr')"
+      "Install it with: pak::pak('BristolMyersSquibb/blockr.dplyr')"
     )
   }
 
   if (!requireNamespace("blockr.ggplot", quietly = TRUE)) {
     cli::cli_warn(
       "Package 'blockr.ggplot' is not installed. ",
-      "Install it with: pak::pak('cynkra/blockr.ggplot')"
+      "Install it with: pak::pak('BristolMyersSquibb/blockr.ggplot')"
     )
   }
 
