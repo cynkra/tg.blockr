@@ -231,7 +231,7 @@ blockr <- function(...) {
           name = "TG Data",
           description = "Load datasets from Canton Thurgau, Switzerland",
           uid = "tgdata_block",
-          category = "data",
+          category = "input",
           package = "tg.blockr",
           overwrite = TRUE
         )
