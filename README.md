@@ -16,8 +16,9 @@ tg.blockr is part of the blockr ecosystem:
 ```r
 # Install from GitHub
 pak::pak("cynkra/tg.blockr")
-pak::pak("cynkra/tg.data")
-pak::pak("BristolMyersSquibb/blockr")
+pak::pak("ogdtg/odsAPI")
+pak::pak("stat-tg/tg.data")
+pak::pak("BristolMyersSquibb/blockr", upgrade = TRUE, dependencies = TRUE)
 ```
 
 ## Getting Started
